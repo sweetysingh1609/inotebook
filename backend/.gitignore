@@ -1,4 +1,4 @@
 # dependencies
 #to ignore
 /node_modules
-db
+/db
