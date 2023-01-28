@@ -2,3 +2,5 @@
 #to ignore
 /node_modules
 db.js
+/db.js
+db
