@@ -5,6 +5,7 @@ import { Home } from "./components/Home";
 import { About } from "./components/About";
 import { createBrowserHistory } from "history";
 import NoteState from "./context/notes/NoteState";
+import Alert from "./components/Alert";
 export const customHistory = createBrowserHistory();
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <NoteState>
         <Router history={customHistory}>
           <Navbar />
+          <Alert message="This is msg"/>
           <div className="container">
             <Switch>
               <Route exact path="/">
