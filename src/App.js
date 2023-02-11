@@ -13,7 +13,7 @@ function App() {
       <NoteState>
         <Router history={customHistory}>
           <Navbar />
-          <Alert message="This is msg"/>
+          <Alert message="This is msg" />
           <div className="container">
             <Switch>
               <Route exact path="/">
