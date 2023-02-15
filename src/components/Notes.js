@@ -4,8 +4,9 @@ import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
 export const Notes = () => {
   const context = useContext(noteContext);
-  const { notes, getNotes } = context;
+  const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({
+    id:"",
     etitle: "",
     edescription: "",
     etag: "default",
@@ -16,11 +17,12 @@ export const Notes = () => {
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({etitle:currentNote.title, edescription:currentNote.description, etag:currentNote.tag})
+    setNote({id: currentNote._id, etitle:currentNote.title, edescription:currentNote.description, etag:currentNote.tag})
   };
   const handleClick = (e) => {
     console.log("Updating the note...", note)
-    e.preventDefault();
+    editNote(note.id, note.etitle, note.edescription, note.etag)
+    refClose.current.click();
 
     
   };
@@ -29,6 +31,7 @@ export const Notes = () => {
   };
 
   const ref = useRef(null);
+  const refClose = useRef(null);
   return (
     <>
       <AddNote />
@@ -108,6 +111,7 @@ export const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
+              ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
