@@ -74,6 +74,8 @@ export const Notes = () => {
                   <input
                     value={note.etitle}
                     onChange={onChange}
+                    minLength={5}
+                    required
                     type="text"
                     className="form-control"
                     id="etitle"
@@ -88,6 +90,8 @@ export const Notes = () => {
                   <input
                     value={note.edescription}
                     onChange={onChange}
+                    minLength={5}
+                    required
                     type="text"
                     className="form-control"
                     id="edescription"
@@ -101,6 +105,8 @@ export const Notes = () => {
                   <input
                     value={note.etag}
                     onChange={onChange}
+                    minLength={5}
+                    required
                     type="text"
                     className="form-control"
                     id="etag"
@@ -111,14 +117,19 @@ export const Notes = () => {
             </div>
             <div className="modal-footer">
               <button
-              ref={refClose}
+                ref={refClose}
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
                 Close
               </button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>
+              <button
+                disabled={note.etitle.length < 5 || note.edescription.length < 5}
+                type="button"
+                className="btn btn-primary"
+                onClick={handleClick}
+              >
                 Update Note
               </button>
             </div>
@@ -127,6 +138,9 @@ export const Notes = () => {
       </div>
       <div className="row my-3">
         <h2>Your notes</h2>
+        <div className="container mx-2">
+          {notes.length === 0 && "No notes to display"}
+        </div>
         {notes.map((note) => {
           //In mogo we have to mention _id instead of id
           return (
