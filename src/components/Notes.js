@@ -2,7 +2,7 @@ import { React, useState,useContext, useEffect, useRef } from "react";
 import noteContext from "../context/notes/NoteContext";
 import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
-export const Notes = () => {
+export const Notes = (props) => {
   const context = useContext(noteContext);
   const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({
@@ -18,11 +18,13 @@ export const Notes = () => {
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({id: currentNote._id, etitle:currentNote.title, edescription:currentNote.description, etag:currentNote.tag})
+    
   };
   const handleClick = (e) => {
     console.log("Updating the note...", note)
     editNote(note.id, note.etitle, note.edescription, note.etag)
     refClose.current.click();
+    props.showAlert("Updated Successfully", "success");
 
     
   };
@@ -34,7 +36,7 @@ export const Notes = () => {
   const refClose = useRef(null);
   return (
     <>
-      <AddNote />
+      <AddNote  showAlert={props.showAlert}/>
       <button
         ref={ref}
         type="button"
@@ -144,7 +146,7 @@ export const Notes = () => {
         {notes.map((note) => {
           //In mogo we have to mention _id instead of id
           return (
-            <NoteItem key={note._id} updateNote={updateNote} note={note} />
+            <NoteItem showAlert={props.showAlert} key={note._id} updateNote={updateNote} note={note} />
           );
         })}
       </div>
