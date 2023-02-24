@@ -1,9 +1,11 @@
 import { React, useState,useContext, useEffect, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import noteContext from "../context/notes/NoteContext";
 import AddNote from "./AddNote";
 import NoteItem from "./NoteItem";
 export const Notes = (props) => {
   const context = useContext(noteContext);
+  let history = useHistory();
   const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({
     id:"",
@@ -12,9 +14,17 @@ export const Notes = (props) => {
     etag: "default",
   });
   useEffect(() => {
-    getNotes();
+    if(localStorage.getItem('token')){
+      getNotes();
+    }
+    else{
+      history.push("/login")
+
+    }
   }, []);
 
+   const ref = useRef(null);
+   const refClose = useRef(null);
   const updateNote = (currentNote) => {
     ref.current.click();
     setNote({id: currentNote._id, etitle:currentNote.title, edescription:currentNote.description, etag:currentNote.tag})
@@ -32,8 +42,7 @@ export const Notes = (props) => {
     setNote({ ...note, [e.target.name]: e.target.value });
   };
 
-  const ref = useRef(null);
-  const refClose = useRef(null);
+ 
   return (
     <>
       <AddNote  showAlert={props.showAlert}/>
@@ -143,12 +152,12 @@ export const Notes = (props) => {
         <div className="container mx-2">
           {notes.length === 0 && "No notes to display"}
         </div>
-        {notes.map((note) => {
+        {/* {notes.map((note) => {
           //In mogo we have to mention _id instead of id
           return (
             <NoteItem showAlert={props.showAlert} key={note._id} updateNote={updateNote} note={note} />
           );
-        })}
+        })} */}
       </div>
     </>
   );
